@@ -1,4 +1,4 @@
-package com.example.rps_template.ui.theme
+package com.example.rockpaperscissors.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.example.rps_template
+package com.example.rockpaperscissors
 
 import org.junit.Test
 

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.rps_template"
+    namespace = "com.example.rockpaperscissors"
     compileSdk {
         version = release(37)
     }

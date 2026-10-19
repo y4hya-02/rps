@@ -1,6 +1,5 @@
-package com.example.rps_template.ui.theme
+package com.example.rockpaperscissors.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

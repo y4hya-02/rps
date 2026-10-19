@@ -16,14 +16,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.rps_template.ui.theme.RPSTemplateTheme
+import com.example.rockpaperscissors.ui.theme.RPSTemplateTheme
 
 // You do not need to change MainActivity. It starts the app and shows RockPaperScissorsApp().
 class MainActivity : ComponentActivity() {
@@ -50,12 +49,25 @@ class MainActivity : ComponentActivity() {
 // ---- Stage 1: enum classes -------------------------------------------
 // Make an enum class called Move with ROCK, PAPER and SCISSORS.
 // Make an enum class called Outcome with WIN, LOSE and DRAW.
+enum class Move (val label: String) {
+     ROCK("Rock 🪨"), PAPER("Paper 📃"), SCISSORS("Scissors ✂️") }
 
+enum class Outcome (val label: String) {
+    WIN("Congrats, you won!"), LOSE("You lost!"), DRAW("Its a draw!")
+}
 
 // ---- Stage 2: decide who wins ----------------------------------------
 // Write a function decide(player: Move, computer: Move): Outcome
 // Use the rules table from the start of the lesson.
-
+fun decide(player: Move, computer: Move): Outcome {
+    return when {
+        player == computer -> Outcome.DRAW
+        player == Move.ROCK && computer == Move.SCISSORS -> Outcome.WIN
+        player == Move.PAPER && computer == Move.ROCK -> Outcome.WIN
+        player == Move.SCISSORS && computer == Move.PAPER -> Outcome.WIN
+        else -> Outcome.LOSE
+    }
+}
 
 // ---- Stage 4: screens ------------------------------------------------
 // Make an enum class called Screen with START, GAME and RESULTS.
@@ -66,10 +78,27 @@ class MainActivity : ComponentActivity() {
 // Stage 4: this becomes the parent that chooses which screen to show.
 @Composable
 fun RockPaperScissorsApp() {
+    var message by rememberSaveable { mutableStateOf("Pick a move") }
+    var playerScore by rememberSaveable { mutableStateOf(0) }
+    var computerScore by rememberSaveable { mutableStateOf(0) }
+    val gameOver = playerScore == 3 || computerScore == 3
+
+
     Column(modifier = Modifier.fillMaxSize().padding(24.dp)) {
         Text("Rock, Paper, Scissors", fontSize = 32.sp)
         Spacer(modifier = Modifier.height(16.dp))
-        Text("Your game goes here")
+        Text(message)
+        Spacer(modifier = Modifier.height(16.dp))
+        for (move in Move.entries) {
+            Button(onClick = {
+                val computerMove = Move.entries.random()
+                val outcome = decide(move, computerMove)
+                message = "You: ${move.label} Computer: ${computerMove.label} ${outcome.label}"
+            }) {
+                Text(move.label)
+
+            }
+        }
     }
 }
 
