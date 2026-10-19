@@ -90,14 +90,22 @@ fun RockPaperScissorsApp() {
         Text(message)
         Spacer(modifier = Modifier.height(16.dp))
         for (move in Move.entries) {
-            Button(onClick = {
+            Button(enabled = !gameOver, onClick = {
                 val computerMove = Move.entries.random()
                 val outcome = decide(move, computerMove)
+                if (outcome == Outcome.WIN) playerScore = playerScore + 1
+                if (outcome == Outcome.LOSE) computerScore = computerScore + 1
                 message = "You: ${move.label} Computer: ${computerMove.label} ${outcome.label}"
             }) {
                 Text(move.label)
 
+
             }
+
+        }
+        Text("You $playerScore - $computerScore Computer", fontSize = 28.sp)
+        if (gameOver) {
+            Text("Game over!", fontSize = 28.sp)
         }
     }
 }
