@@ -98,10 +98,7 @@ fun RockPaperScissorsApp() {
                 message = "You: ${move.label} Computer: ${computerMove.label} ${outcome.label}"
             }) {
                 Text(move.label)
-
-
             }
-
         }
         Text("You $playerScore - $computerScore Computer", fontSize = 28.sp)
         if (gameOver) {
